@@ -1,0 +1,26 @@
+{
+  "name": "sf-crime-data",
+  "version": "1.0.0",
+  "description": "A quick prototype to test pulling incident reports from SF Open Data",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "cors": "^2.8.0",
+    "express": "^4.14.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node ./srv/app",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bhuber2010/sf-crime-data.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bhuber2010/sf-crime-data/issues"
+  },
+  "homepage": "https://github.com/bhuber2010/sf-crime-data#readme"
+}
