@@ -124,7 +124,7 @@
         </div>
 
         <!-- Load jQuery from Google's CDN, so that it is likely to be already in the client's cache -->
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
         <!-- Load pre-made scripts from vendors -->
         <script src="//cdnjs.cloudflare.com/ajax/libs/URI.js/1.18.1/URI.js"></script>
@@ -142,7 +142,7 @@
         <script src="js/vendor/daterangepicker.js"></script>
         <script src="js/vendor/jquery.nouislider.all.min.js"></script>
         <script src="js/vendor/bootstrap3-typeahead.js"></script>
-        <script src="js/vendor/feedback.min.js"></script>
+        <script src="js/vendor/feedback.js"></script>
         <!-- Pre-made scripts loaded -->
 
         <!-- Loading modules -->
@@ -155,7 +155,8 @@
         <script type="text/javascript">
             $.feedback({
                 html2canvasURL: 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js',
-                ajaxURL: 'http://localhost:3333/feedback'
+                ajaxURL: 'http://localhost:3333/feedback',
+                postHTML: false,
           });
         </script>
 
