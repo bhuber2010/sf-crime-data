@@ -13,7 +13,7 @@
     "dotenv": "^2.0.0"
   },
   "scripts": {
-    "start": "node ./srv/app",
+    "start": "node --inspect ./srv/app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

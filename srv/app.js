@@ -28,6 +28,11 @@ app.post('/feedback', function(req, res) {
   res.sendStatus(200)
 })
 
+app.get('/test', function(req, res) {
+  console.log("We are attached and working if you see this in the browser console.");
+  res.end()
+})
+
 app.set('port', process.env.PORT || 3333);
 
 var server = app.listen(app.get('port'), function() {

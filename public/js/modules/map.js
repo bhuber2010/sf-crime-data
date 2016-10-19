@@ -41,6 +41,7 @@ var mapModule = (function(window,$){
     function _drawMap(){
         L.mapbox.accessToken = 'pk.eyJ1IjoiZGF0YXNmIiwiYSI6Ilo3bVlHRDQifQ.7gkiPnZtioL8CnCvJ5z9Bg';
 
+
 		//Create our map instance
 		_components["map"] = L.mapbox.map(_mapContainer.prop("id"), _mapboxBaseMapCode).setView([37.767806, -122.438153], 12);
 		_components["layers"]["searchradius"] = L.circle([37.767806, -122.438153], 402.3).addTo(_components["map"]);

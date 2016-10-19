@@ -118,6 +118,7 @@
             <div style="clear: both"></div>
 
             <footer class="small">
+              <button type="button" id="nothing">Test Node inspect</button>
               <p>Data from <a href="https://data.sfgov.org/" target="_blank">SF OpenData</a>.</p>
             </footer>
 
@@ -192,7 +193,13 @@
                   console.error(error)
                 })
 
-
+                // testing node-inspect
+                $('#nothing').click(function() {
+                  $.get("http://localhost:3333/test")
+                    .done(function() {
+                      console.log("cool beans");
+                    })
+                })
 
             });
         </script>
