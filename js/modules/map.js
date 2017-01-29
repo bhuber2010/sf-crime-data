@@ -2,7 +2,8 @@ var mapModule = (function(window,$){
 
 	/*Global variables within the module scope*/
     var _mapContainer;
-	var _mapboxBaseMapCode = 'datasf.j9b9ihf0';
+    var _mapDesignID = 'mapbox.streets';
+    var _mapboxAccessToken = 'pk.eyJ1IjoiY3JpbWVkYXRhc2YiLCJhIjoiY2l2Y296YTl2MDE2bTJ0cGI1NGoyY2RzciJ9.DRX-7gKkJy4FT2Q1Qybb2w';
 	var _components = {
 	    "map": null,
 		"layers": {
@@ -39,14 +40,14 @@ var mapModule = (function(window,$){
 	}
 
     function _drawMap(){
-        L.mapbox.accessToken = 'pk.eyJ1IjoiZGF0YXNmIiwiYSI6Ilo3bVlHRDQifQ.7gkiPnZtioL8CnCvJ5z9Bg';
+        L.mapbox.accessToken = _mapboxAccessToken;
 
 		//Create our map instance
-		_components["map"] = L.mapbox.map(_mapContainer.prop("id"), _mapboxBaseMapCode).setView([37.767806, -122.438153], 12);
+		_components["map"] = L.mapbox.map(_mapContainer.prop("id"), _mapDesignID).setView([37.767806, -122.438153], 12);
 		_components["layers"]["searchradius"] = L.circle([37.767806, -122.438153], 402.3).addTo(_components["map"]);
 
 		//Plot the initial user location
-		_components["layers"]["user"].setGeoJSON({ "type": "Feature","properties": {"marker-size": "large"}, "geometry": {"type": "Point", "coordinates": [-122.438153,37.767806]}});
+        _setUserLocation({ "type": "Feature","properties": {"marker-size": "large"}, "geometry": {"type": "Point", "coordinates": [-122.438153,37.767806]}});
 
 		//Add all layers to the map instance
 		_enableAllLayers();
@@ -74,7 +75,8 @@ var mapModule = (function(window,$){
                 var marker = layer;
                 var feature = marker.feature;
 
-                var popupContent = feature.properties.category;
+                var popupContent = feature.properties.descript + "; INCIDENT #: " + feature.properties.incidntnum;
+                 // + "; Resolution: " + feature.properties.resolution
 
                 marker.bindPopup(popupContent);
             });
@@ -87,6 +89,10 @@ var mapModule = (function(window,$){
 		{
 		    //We received no results from the API, delete map contents
 			_components["layers"]["incidents"].clearLayers();
+			
+			//Clear the clusters from the map as well, not just the feature layer
+			_components["cluster"].clearLayers();
+			
 		}
 
 		//Set map bounds to the bounds of the search radius
@@ -100,10 +106,14 @@ var mapModule = (function(window,$){
       * @param {object} feature
     */
 	function _plotUserLocation(feature){
-	    _components["layers"]["user"].setGeoJSON(feature);
+        _setUserLocation(feature);
 		_components["layers"]["searchradius"].setLatLng([feature.geometry.coordinates[1], feature.geometry.coordinates[0]]);
 		_components["layers"]["searchradius"].setRadius(_getUserSearchRadius());
 	}
+
+	function _setUserLocation(geoJson){
+	    _components["layers"]["user"].setGeoJSON(geoJson);
+    }
 
 	function _getUserLocation(){
 	    return _components["layers"]["user"].getGeoJSON();
@@ -128,6 +138,18 @@ var mapModule = (function(window,$){
 		return _components["layers"]["searchradius"].getRadius();
 	}
 
+	function _setComponents(components){
+        _components = components;
+    }
+
+	function _getComponents(){
+		return _components;
+	}
+
+    function _getMapboxAccessToken() {
+        return _mapboxAccessToken;
+    }
+
 	function _showLoader(){
         _mapContainer.find(".loading").show();
 	}
@@ -142,7 +164,11 @@ var mapModule = (function(window,$){
   		centerMapOnLocation: _centerMapOnLocation,
   		getUserSearchRadius:_getUserSearchRadius,
   		setUserSearchRadius:_setUserSearchRadius,
+  		setUserLocation: _setUserLocation,
   		getUserLocation: _getUserLocation,
+  		setComponents: _setComponents,
+  		getComponents: _getComponents,
+        getMapboxAccessToken: _getMapboxAccessToken,
   		drawApiResponse:_drawApiResponse,
   		showLoader: _showLoader,
   		hideLoader: _hideLoader
